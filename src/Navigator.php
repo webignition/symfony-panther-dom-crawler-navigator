@@ -101,11 +101,13 @@ class Navigator
      */
     public function hasFromJson(string $json): bool
     {
-        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
-            return count($collection) > 0;
-        };
+        try {
+            $collection = $this->findFromJson($json);
+        } catch (InvalidElementPositionException|UnknownElementException) {
+            return false;
+        }
 
-        return $this->examineCollectionCount($json, $examiner);
+        return count($collection) > 0;
     }
 
     /**
@@ -114,28 +116,13 @@ class Navigator
      */
     public function hasOneFromJson(string $json): bool
     {
-        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
-            return 1 === count($collection);
-        };
-
-        return $this->examineCollectionCount($json, $examiner);
-    }
-
-    /**
-     * @param callable(WebDriverElementCollectionInterface): bool $examiner
-     *
-     * @throws InvalidJsonException
-     * @throws InvalidLocatorException
-     */
-    private function examineCollectionCount(string $json, callable $examiner): bool
-    {
         try {
             $collection = $this->findFromJson($json);
-
-            return $examiner($collection);
         } catch (InvalidElementPositionException|UnknownElementException) {
             return false;
         }
+
+        return 1 === count($collection);
     }
 
     /**
