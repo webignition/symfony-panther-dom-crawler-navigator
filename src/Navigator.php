@@ -48,7 +48,7 @@ class Navigator
      * @throws UnknownElementException
      * @throws InvalidJsonException
      */
-    public function findFromJson(string $json): WebDriverElementCollectionInterface
+    public function find(string $json): WebDriverElementCollectionInterface
     {
         $elementIdentifier = ElementIdentifier::fromJson($json);
 
@@ -80,9 +80,9 @@ class Navigator
      * @throws OverlyBroadLocatorException
      * @throws UnknownElementException
      */
-    public function findOneFromJson(string $json): WebDriverElement
+    public function findOne(string $json): WebDriverElement
     {
-        $collection = $this->findFromJson($json);
+        $collection = $this->find($json);
 
         if (1 === count($collection)) {
             $element = $collection->get(0);
@@ -99,10 +99,10 @@ class Navigator
      * @throws InvalidJsonException
      * @throws InvalidLocatorException
      */
-    public function hasFromJson(string $json): bool
+    public function has(string $json): bool
     {
         try {
-            $collection = $this->findFromJson($json);
+            $collection = $this->find($json);
         } catch (InvalidElementPositionException|UnknownElementException) {
             return false;
         }
@@ -114,10 +114,10 @@ class Navigator
      * @throws InvalidJsonException
      * @throws InvalidLocatorException
      */
-    public function hasOneFromJson(string $json): bool
+    public function hasOne(string $json): bool
     {
         try {
-            $collection = $this->findFromJson($json);
+            $collection = $this->find($json);
         } catch (InvalidElementPositionException|UnknownElementException) {
             return false;
         }
