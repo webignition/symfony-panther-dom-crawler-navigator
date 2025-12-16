@@ -29,7 +29,7 @@ jobs:
       - name: Run
         env:
           NO_TTY: "true"
-        run: composer cs-fixer-dry-runn
+        run: composer cs-fixer-dry-run
 
   phpcs:
     name: PHPCS - PHP ${{ matrix.php }}
