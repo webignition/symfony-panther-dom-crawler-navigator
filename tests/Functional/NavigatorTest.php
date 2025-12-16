@@ -34,7 +34,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function findSuccessDataProvider(): array
+    public static function findSuccessDataProvider(): array
     {
         return [
             'first h1 with css selector' => [
@@ -156,7 +156,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function findOneSuccessDataProvider(): array
+    public static function findOneSuccessDataProvider(): array
     {
         return [
             'first h1 with css selector' => [
@@ -224,7 +224,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function hasSuccessDataProvider(): array
+    public static function hasSuccessDataProvider(): array
     {
         return [
             'existent element without scope' => [
@@ -283,7 +283,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function hasOneSuccessDataProvider(): array
+    public static function hasOneSuccessDataProvider(): array
     {
         return [
             'existent element without scope' => [
@@ -345,7 +345,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function findThrowsUnknownElementExceptionDataProvider(): array
+    public static function findThrowsUnknownElementExceptionDataProvider(): array
     {
         return [
             'identifier refers to unknown element, no scope' => [
@@ -399,7 +399,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function findThrowsInvalidPositionExceptionDataProvider(): array
+    public static function findThrowsInvalidPositionExceptionDataProvider(): array
     {
         return [
             'ordinalPosition zero, collection count non-zero' => [
@@ -438,7 +438,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function findOneThrowsOverlyBroadLocatorExceptionDataProvider(): array
+    public static function findOneThrowsOverlyBroadLocatorExceptionDataProvider(): array
     {
         return [
             'collection locator overly broad, no scope' => [

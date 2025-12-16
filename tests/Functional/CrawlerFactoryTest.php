@@ -35,7 +35,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function createElementCrawlerSuccessDataProvider(): array
+    public static function createElementCrawlerSuccessDataProvider(): array
     {
         return [
             'first h1 with css selector, position null' => [
@@ -97,7 +97,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function createSingleElementCrawlerSuccessDataProvider(): array
+    public static function createSingleElementCrawlerSuccessDataProvider(): array
     {
         return [
             'first h1 with css selector, position null' => [
@@ -164,7 +164,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function createElementCrawlerThrowsInvalidElementPositionDataProvider(): array
+    public static function createElementCrawlerThrowsInvalidElementPositionDataProvider(): array
     {
         return [
             'ordinalPosition zero, collection count non-zero' => [
@@ -203,7 +203,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function createElementCrawlerThrowsInvalidLocatorExceptionDataProvider(): array
+    public static function createElementCrawlerThrowsInvalidLocatorExceptionDataProvider(): array
     {
         return [
             'invalid CSS selector' => [

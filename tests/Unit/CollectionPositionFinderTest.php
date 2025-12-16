@@ -34,7 +34,7 @@ class CollectionPositionFinderTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function findSuccessDataProvider(): array
+    public static function findSuccessDataProvider(): array
     {
         return [
             'first of three' => [
@@ -86,7 +86,7 @@ class CollectionPositionFinderTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function findThrowsExceptionDataProvider(): array
+    public static function findThrowsExceptionDataProvider(): array
     {
         return [
             'ordinalPosition: zero, collectionCount: non-zero' => [
