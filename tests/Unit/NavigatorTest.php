@@ -23,10 +23,10 @@ class NavigatorTest extends TestCase
         $property = $reflector->getProperty('crawler');
         $property->setAccessible(true);
 
-        $this->assertSame($property->getValue($navigator), $crawler);
+        self::assertSame($property->getValue($navigator), $crawler);
 
         $newCrawler = new Crawler([], \Mockery::mock(WebDriver::class));
         $navigator->setCrawler($newCrawler);
-        $this->assertSame($property->getValue($navigator), $newCrawler);
+        self::assertSame($property->getValue($navigator), $newCrawler);
     }
 }

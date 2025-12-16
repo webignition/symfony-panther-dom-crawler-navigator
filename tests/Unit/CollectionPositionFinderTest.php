@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyDomCrawlerNavigator\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use webignition\SymfonyDomCrawlerNavigator\CollectionPositionFinder;
 use webignition\SymfonyDomCrawlerNavigator\Exception\PositionCannotBeZeroException;
@@ -20,15 +21,13 @@ class CollectionPositionFinderTest extends TestCase
         $this->collectionPositionFinder = new CollectionPositionFinder();
     }
 
-    /**
-     * @dataProvider findSuccessDataProvider
-     */
+    #[DataProvider('findSuccessDataProvider')]
     public function testFindSuccess(
         int $ordinalPosition,
         int $collectionCount,
         int $expectedPosition
     ): void {
-        $this->assertSame($expectedPosition, $this->collectionPositionFinder->find($ordinalPosition, $collectionCount));
+        self::assertSame($expectedPosition, $this->collectionPositionFinder->find($ordinalPosition, $collectionCount));
     }
 
     /**
@@ -70,9 +69,7 @@ class CollectionPositionFinderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider findThrowsExceptionDataProvider
-     */
+    #[DataProvider('findThrowsExceptionDataProvider')]
     public function testFindThrowsException(
         int $ordinalPosition,
         int $collectionCount,

@@ -23,11 +23,11 @@ class PositionOutOfBoundsExceptionTest extends TestCase
 
     public function testGetOrdinalPosition(): void
     {
-        $this->assertSame(self::ORDINAL_POSITION, $this->exception->getOrdinalPosition());
+        self::assertSame(self::ORDINAL_POSITION, $this->exception->getOrdinalPosition());
     }
 
     public function testGetCollectionCount(): void
     {
-        $this->assertSame(self::COLLECTION_COUNT, $this->exception->getCollectionCount());
+        self::assertSame(self::COLLECTION_COUNT, $this->exception->getCollectionCount());
     }
 }
