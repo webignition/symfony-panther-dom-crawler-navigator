@@ -140,17 +140,6 @@ class NavigatorTest extends AbstractBrowserTestCase
     }
 
     #[DataProvider('findOneSuccessDataProvider')]
-    public function testFindOneSuccess(ElementIdentifierInterface $elementIdentifier, callable $assertions): void
-    {
-        $crawler = self::$client->request('GET', '/basic.html');
-        $navigator = Navigator::create($crawler);
-
-        $element = $navigator->findOne($elementIdentifier);
-
-        $assertions($element);
-    }
-
-    #[DataProvider('findOneSuccessDataProvider')]
     public function testFindOneFromJsonSuccess(
         ElementIdentifierInterface $elementIdentifier,
         callable $assertions
@@ -221,15 +210,6 @@ class NavigatorTest extends AbstractBrowserTestCase
     }
 
     #[DataProvider('hasSuccessDataProvider')]
-    public function testHasSuccess(ElementIdentifierInterface $elementIdentifier, bool $expectedHas): void
-    {
-        $crawler = self::$client->request('GET', '/basic.html');
-        $navigator = Navigator::create($crawler);
-
-        self::assertSame($expectedHas, $navigator->has($elementIdentifier));
-    }
-
-    #[DataProvider('hasSuccessDataProvider')]
     public function testHasFromJsonSuccess(ElementIdentifierInterface $elementIdentifier, bool $expectedHas): void
     {
         $crawler = self::$client->request('GET', '/basic.html');
@@ -284,15 +264,6 @@ class NavigatorTest extends AbstractBrowserTestCase
                 'expectedHas' => true,
             ],
         ];
-    }
-
-    #[DataProvider('hasOneSuccessDataProvider')]
-    public function testHasOneSuccess(ElementIdentifierInterface $elementIdentifier, bool $expectedHas): void
-    {
-        $crawler = self::$client->request('GET', '/basic.html');
-        $navigator = Navigator::create($crawler);
-
-        self::assertSame($expectedHas, $navigator->hasOne($elementIdentifier));
     }
 
     #[DataProvider('hasOneSuccessDataProvider')]
@@ -437,7 +408,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     }
 
     #[DataProvider('findOneThrowsOverlyBroadLocatorExceptionDataProvider')]
-    public function testFindOneThrowsOverlyBroadLocatorException(
+    public function testFindOneFromJsonThrowsOverlyBroadLocatorException(
         ElementIdentifierInterface $elementIdentifier,
         int $expectedCollectionCount
     ): void {
@@ -445,7 +416,7 @@ class NavigatorTest extends AbstractBrowserTestCase
         $navigator = Navigator::create($crawler);
 
         try {
-            $navigator->findOne($elementIdentifier);
+            $navigator->findOneFromJson((string) json_encode($elementIdentifier));
             $this->fail('OverlyBroadLocatorException not thrown');
         } catch (OverlyBroadLocatorException $overlyBroadLocatorException) {
             self::assertCount($expectedCollectionCount, $overlyBroadLocatorException->getCollection());

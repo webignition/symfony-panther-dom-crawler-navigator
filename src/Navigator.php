@@ -44,10 +44,96 @@ class Navigator
 
     /**
      * @throws InvalidElementPositionException
+     * @throws InvalidLocatorException
+     * @throws UnknownElementException
+     * @throws InvalidJsonException
+     */
+    public function findFromJson(string $json): WebDriverElementCollectionInterface
+    {
+        return $this->find(ElementIdentifier::fromJson($json));
+    }
+
+    /**
+     * @throws InvalidElementPositionException
+     * @throws InvalidJsonException
+     * @throws InvalidLocatorException
+     * @throws OverlyBroadLocatorException
+     * @throws UnknownElementException
+     */
+    public function findOneFromJson(string $json): WebDriverElement
+    {
+        return $this->findOne(ElementIdentifier::fromJson($json));
+    }
+
+    /**
+     * @throws InvalidJsonException
+     * @throws InvalidLocatorException
+     */
+    public function hasFromJson(string $json): bool
+    {
+        return $this->has(ElementIdentifier::fromJson($json));
+    }
+
+    /**
+     * @throws InvalidJsonException
+     * @throws InvalidLocatorException
+     */
+    public function hasOneFromJson(string $json): bool
+    {
+        return $this->hasOne(ElementIdentifier::fromJson($json));
+    }
+
+    /**
+     * @throws InvalidLocatorException
+     */
+    private function hasOne(ElementIdentifierInterface $elementIdentifier): bool
+    {
+        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
+            return 1 === count($collection);
+        };
+
+        return $this->examineCollectionCount($elementIdentifier, $examiner);
+    }
+
+    /**
+     * @throws InvalidLocatorException
+     */
+    private function has(ElementIdentifierInterface $elementIdentifier): bool
+    {
+        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
+            return count($collection) > 0;
+        };
+
+        return $this->examineCollectionCount($elementIdentifier, $examiner);
+    }
+
+    /**
+     * @throws InvalidElementPositionException
+     * @throws UnknownElementException
+     * @throws OverlyBroadLocatorException
+     * @throws InvalidLocatorException
+     */
+    private function findOne(ElementIdentifierInterface $elementIdentifier): WebDriverElement
+    {
+        $collection = $this->find($elementIdentifier);
+
+        if (1 === count($collection)) {
+            $element = $collection->get(0);
+
+            if ($element instanceof WebDriverElement) {
+                return $element;
+            }
+        }
+
+        throw new OverlyBroadLocatorException($elementIdentifier, $collection);
+    }
+
+    /**
+     * @throws InvalidElementPositionException
      * @throws UnknownElementException
      * @throws InvalidLocatorException
      */
-    public function find(ElementIdentifierInterface $elementIdentifier): WebDriverElementCollectionInterface
+    private function find(ElementIdentifierInterface $elementIdentifier): WebDriverElementCollectionInterface
     {
         $scopeCrawler = $this->createScopeCrawler($elementIdentifier);
 
@@ -68,92 +154,6 @@ class Navigator
         }
 
         return new WebDriverElementCollection($elements);
-    }
-
-    /**
-     * @throws InvalidElementPositionException
-     * @throws InvalidLocatorException
-     * @throws UnknownElementException
-     * @throws InvalidJsonException
-     */
-    public function findFromJson(string $json): WebDriverElementCollectionInterface
-    {
-        return $this->find(ElementIdentifier::fromJson($json));
-    }
-
-    /**
-     * @throws InvalidElementPositionException
-     * @throws UnknownElementException
-     * @throws OverlyBroadLocatorException
-     * @throws InvalidLocatorException
-     */
-    public function findOne(ElementIdentifierInterface $elementIdentifier): WebDriverElement
-    {
-        $collection = $this->find($elementIdentifier);
-
-        if (1 === count($collection)) {
-            $element = $collection->get(0);
-
-            if ($element instanceof WebDriverElement) {
-                return $element;
-            }
-        }
-
-        throw new OverlyBroadLocatorException($elementIdentifier, $collection);
-    }
-
-    /**
-     * @throws InvalidElementPositionException
-     * @throws InvalidJsonException
-     * @throws InvalidLocatorException
-     * @throws OverlyBroadLocatorException
-     * @throws UnknownElementException
-     */
-    public function findOneFromJson(string $json): WebDriverElement
-    {
-        return $this->findOne(ElementIdentifier::fromJson($json));
-    }
-
-    /**
-     * @throws InvalidLocatorException
-     */
-    public function has(ElementIdentifierInterface $elementIdentifier): bool
-    {
-        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
-            return count($collection) > 0;
-        };
-
-        return $this->examineCollectionCount($elementIdentifier, $examiner);
-    }
-
-    /**
-     * @throws InvalidJsonException
-     * @throws InvalidLocatorException
-     */
-    public function hasFromJson(string $json): bool
-    {
-        return $this->has(ElementIdentifier::fromJson($json));
-    }
-
-    /**
-     * @throws InvalidLocatorException
-     */
-    public function hasOne(ElementIdentifierInterface $elementIdentifier): bool
-    {
-        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
-            return 1 === count($collection);
-        };
-
-        return $this->examineCollectionCount($elementIdentifier, $examiner);
-    }
-
-    /**
-     * @throws InvalidJsonException
-     * @throws InvalidLocatorException
-     */
-    public function hasOneFromJson(string $json): bool
-    {
-        return $this->hasOne(ElementIdentifier::fromJson($json));
     }
 
     /**
