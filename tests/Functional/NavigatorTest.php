@@ -20,17 +20,6 @@ use webignition\WebDriverElementCollection\WebDriverElementCollection;
 class NavigatorTest extends AbstractBrowserTestCase
 {
     #[DataProvider('findSuccessDataProvider')]
-    public function testFindSuccess(ElementIdentifierInterface $elementIdentifier, callable $assertions): void
-    {
-        $crawler = self::$client->request('GET', '/basic.html');
-        $navigator = Navigator::create($crawler);
-
-        $element = $navigator->find($elementIdentifier);
-
-        $assertions($element);
-    }
-
-    #[DataProvider('findSuccessDataProvider')]
     public function testFindFromJsonSuccess(ElementIdentifierInterface $elementIdentifier, callable $assertions): void
     {
         $crawler = self::$client->request('GET', '/basic.html');
