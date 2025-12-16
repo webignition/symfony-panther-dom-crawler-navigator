@@ -18,5 +18,4 @@ return $config->setRules([
     // Following configuration added to make CI builds pass
     // @todo remove in #95
     'nullable_type_declaration_for_default_null_value' => false,
-    'ordered_types' => false,
 ])->setFinder($finder);

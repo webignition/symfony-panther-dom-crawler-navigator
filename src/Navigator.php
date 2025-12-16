@@ -124,7 +124,7 @@ class Navigator
             $collection = $this->find($elementIdentifier);
 
             return $examiner($collection);
-        } catch (UnknownElementException | InvalidElementPositionException $exception) {
+        } catch (InvalidElementPositionException|UnknownElementException $exception) {
             return false;
         }
     }
