@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyDomCrawlerNavigator\Tests\Unit\Exception;
 
+use PHPUnit\Framework\TestCase;
 use webignition\SymfonyDomCrawlerNavigator\Exception\PositionOutOfBoundsException;
 
-class PositionOutOfBoundsExceptionTest extends \PHPUnit\Framework\TestCase
+class PositionOutOfBoundsExceptionTest extends TestCase
 {
     private const COLLECTION_COUNT = 3;
     private const ORDINAL_POSITION = 4;

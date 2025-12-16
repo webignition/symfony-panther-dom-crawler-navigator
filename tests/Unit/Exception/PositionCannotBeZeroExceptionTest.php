@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyDomCrawlerNavigator\Tests\Unit\Exception;
 
+use PHPUnit\Framework\TestCase;
 use webignition\SymfonyDomCrawlerNavigator\Exception\PositionCannotBeZeroException;
 
-class PositionCannotBeZeroExceptionTest extends \PHPUnit\Framework\TestCase
+class PositionCannotBeZeroExceptionTest extends TestCase
 {
     private const COLLECTION_COUNT = 3;
 
