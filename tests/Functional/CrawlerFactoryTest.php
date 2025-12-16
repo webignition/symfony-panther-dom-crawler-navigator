@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace webignition\SymfonyDomCrawlerNavigator\Tests\Functional;
 
 use Facebook\WebDriver\WebDriverElement;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Panther\DomCrawler\Crawler;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
@@ -16,9 +17,7 @@ use webignition\SymfonyDomCrawlerNavigator\Exception\UnknownElementException;
 
 class CrawlerFactoryTest extends AbstractBrowserTestCase
 {
-    /**
-     * @dataProvider createElementCrawlerSuccessDataProvider
-     */
+    #[DataProvider('createElementCrawlerSuccessDataProvider')]
     public function testCreateElementCrawlerSuccess(
         ElementIdentifierInterface $elementIdentifier,
         callable $assertions
@@ -35,13 +34,13 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function createElementCrawlerSuccessDataProvider(): array
+    public static function createElementCrawlerSuccessDataProvider(): array
     {
         return [
             'first h1 with css selector, position null' => [
-                'elementLocator' => new ElementIdentifier('h1'),
+                'elementIdentifier' => new ElementIdentifier('h1'),
                 'assertions' => function (Crawler $crawler) {
-                    $this->assertCount(2, $crawler);
+                    self::assertCount(2, $crawler);
 
                     $expectedElementGetText = [
                         'Hello',
@@ -50,37 +49,35 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
 
                     /** @var WebDriverElement $element */
                     foreach ($crawler as $index => $element) {
-                        $this->assertSame($expectedElementGetText[$index], $element->getText());
+                        self::assertSame($expectedElementGetText[$index], $element->getText());
                     }
                 },
             ],
             'first h1 with css selector, position 1' => [
-                'elementLocator' => new ElementIdentifier('h1', 1),
+                'elementIdentifier' => new ElementIdentifier('h1', 1),
                 'assertions' => function (Crawler $crawler) {
-                    $this->assertCount(1, $crawler);
-                    $this->assertSame('Hello', $crawler->getText());
+                    self::assertCount(1, $crawler);
+                    self::assertSame('Hello', $crawler->getText());
                 },
             ],
             'first h1 with xpath expression' => [
-                'elementLocator' => new ElementIdentifier('//h1', 1),
+                'elementIdentifier' => new ElementIdentifier('//h1', 1),
                 'assertions' => function (Crawler $crawler) {
-                    $this->assertCount(1, $crawler);
-                    $this->assertSame('Hello', $crawler->getText());
+                    self::assertCount(1, $crawler);
+                    self::assertSame('Hello', $crawler->getText());
                 },
             ],
             'second h1 with css selector' => [
-                'elementLocator' => new ElementIdentifier('h1', 2),
+                'elementIdentifier' => new ElementIdentifier('h1', 2),
                 'assertions' => function (Crawler $crawler) {
-                    $this->assertCount(1, $crawler);
-                    $this->assertSame('Main', $crawler->getText());
+                    self::assertCount(1, $crawler);
+                    self::assertSame('Main', $crawler->getText());
                 },
             ],
         ];
     }
 
-    /**
-     * @dataProvider createSingleElementCrawlerSuccessDataProvider
-     */
+    #[DataProvider('createSingleElementCrawlerSuccessDataProvider')]
     public function testCreateSingleElementCrawlerSuccess(
         ElementIdentifierInterface $elementIdentifier,
         callable $assertions
@@ -89,7 +86,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
         $crawlerFactory = CrawlerFactory::create();
 
         $elementCrawler = $crawlerFactory->createSingleElementCrawler($elementIdentifier, $crawler);
-        $this->assertCount(1, $elementCrawler);
+        self::assertCount(1, $elementCrawler);
 
         $assertions($elementCrawler);
     }
@@ -97,25 +94,25 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
     /**
      * @return array<mixed>
      */
-    public function createSingleElementCrawlerSuccessDataProvider(): array
+    public static function createSingleElementCrawlerSuccessDataProvider(): array
     {
         return [
             'first h1 with css selector, position null' => [
-                'elementLocator' => new ElementIdentifier('h1'),
+                'elementIdentifier' => new ElementIdentifier('h1'),
                 'assertions' => function (Crawler $crawler) {
-                    $this->assertSame('Hello', $crawler->getText());
+                    self::assertSame('Hello', $crawler->getText());
                 },
             ],
             'first h1 with css selector, position 1' => [
-                'elementLocator' => new ElementIdentifier('h1', 1),
+                'elementIdentifier' => new ElementIdentifier('h1', 1),
                 'assertions' => function (Crawler $crawler) {
-                    $this->assertSame('Hello', $crawler->getText());
+                    self::assertSame('Hello', $crawler->getText());
                 },
             ],
             'second h1 with css selector, position 2' => [
-                'elementLocator' => new ElementIdentifier('h1', 2),
+                'elementIdentifier' => new ElementIdentifier('h1', 2),
                 'assertions' => function (Crawler $crawler) {
-                    $this->assertSame('Main', $crawler->getText());
+                    self::assertSame('Main', $crawler->getText());
                 },
             ],
         ];
@@ -132,13 +129,11 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
             $crawlerFactory->createElementCrawler($elementIdentifier, $crawler);
             $this->fail('UnknownElementException not thrown');
         } catch (UnknownElementException $unknownElementException) {
-            $this->assertSame($elementIdentifier, $unknownElementException->getElementIdentifier());
+            self::assertSame($elementIdentifier, $unknownElementException->getElementIdentifier());
         }
     }
 
-    /**
-     * @dataProvider createElementCrawlerThrowsInvalidElementPositionDataProvider
-     */
+    #[DataProvider('createElementCrawlerThrowsInvalidElementPositionDataProvider')]
     public function testCreateElementCrawlerThrowsInvalidElementPositionException(
         string $cssLocator,
         int $ordinalPosition
@@ -152,19 +147,19 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
             $crawlerFactory->createElementCrawler($elementIdentifier, $crawler);
             $this->fail('InvalidPositionExceptionInterface instance not thrown');
         } catch (InvalidElementPositionException $invalidElementPositionException) {
-            $this->assertSame($elementIdentifier, $invalidElementPositionException->getElementIdentifier());
+            self::assertSame($elementIdentifier, $invalidElementPositionException->getElementIdentifier());
 
             $previousException = $invalidElementPositionException->getPrevious();
-            $this->assertInstanceOf(InvalidPositionExceptionInterface::class, $previousException);
+            self::assertInstanceOf(InvalidPositionExceptionInterface::class, $previousException);
 
-            $this->assertSame($previousException->getOrdinalPosition(), $elementIdentifier->getOrdinalPosition());
+            self::assertSame($previousException->getOrdinalPosition(), $elementIdentifier->getOrdinalPosition());
         }
     }
 
     /**
      * @return array<mixed>
      */
-    public function createElementCrawlerThrowsInvalidElementPositionDataProvider(): array
+    public static function createElementCrawlerThrowsInvalidElementPositionDataProvider(): array
     {
         return [
             'ordinalPosition zero, collection count non-zero' => [
@@ -182,9 +177,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
         ];
     }
 
-    /**
-     * @dataProvider createElementCrawlerThrowsInvalidLocatorExceptionDataProvider
-     */
+    #[DataProvider('createElementCrawlerThrowsInvalidLocatorExceptionDataProvider')]
     public function testCreateElementCrawlerThrowsInvalidLocatorException(string $locator): void
     {
         $crawler = self::$client->request('GET', '/index.html');
@@ -196,14 +189,14 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
             $crawlerFactory->createElementCrawler($elementIdentifier, $crawler);
             $this->fail('InvalidLocatorException instance not thrown');
         } catch (InvalidLocatorException $invalidLocatorException) {
-            $this->assertSame($elementIdentifier, $invalidLocatorException->getElementIdentifier());
+            self::assertSame($elementIdentifier, $invalidLocatorException->getElementIdentifier());
         }
     }
 
     /**
      * @return array<mixed>
      */
-    public function createElementCrawlerThrowsInvalidLocatorExceptionDataProvider(): array
+    public static function createElementCrawlerThrowsInvalidLocatorExceptionDataProvider(): array
     {
         return [
             'invalid CSS selector' => [

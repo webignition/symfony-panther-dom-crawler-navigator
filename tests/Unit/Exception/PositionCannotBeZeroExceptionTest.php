@@ -22,11 +22,11 @@ class PositionCannotBeZeroExceptionTest extends TestCase
 
     public function testGetOrdinalPosition(): void
     {
-        $this->assertSame(0, $this->exception->getOrdinalPosition());
+        self::assertSame(0, $this->exception->getOrdinalPosition());
     }
 
     public function testGetCollectionCount(): void
     {
-        $this->assertSame(self::COLLECTION_COUNT, $this->exception->getCollectionCount());
+        self::assertSame(self::COLLECTION_COUNT, $this->exception->getCollectionCount());
     }
 }
