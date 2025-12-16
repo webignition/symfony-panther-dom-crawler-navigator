@@ -349,7 +349,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     }
 
     #[DataProvider('findThrowsUnknownElementExceptionDataProvider')]
-    public function testFindThrowsUnknownElementException(
+    public function testFindFromJsonThrowsUnknownElementException(
         ElementIdentifierInterface $elementIdentifier,
         ElementIdentifierInterface $expectedExceptionElementIdentifier
     ): void {
@@ -357,7 +357,7 @@ class NavigatorTest extends AbstractBrowserTestCase
         $navigator = Navigator::create($crawler);
 
         try {
-            $navigator->find($elementIdentifier);
+            $navigator->findFromJson((string) json_encode($elementIdentifier));
             $this->fail('UnknownElementException not thrown');
         } catch (UnknownElementException $unknownElementException) {
             self::assertEquals($expectedExceptionElementIdentifier, $unknownElementException->getElementIdentifier());
@@ -395,7 +395,7 @@ class NavigatorTest extends AbstractBrowserTestCase
     }
 
     #[DataProvider('findThrowsInvalidPositionExceptionDataProvider')]
-    public function testFindThrowsInvalidPositionException(string $cssLocator, int $ordinalPosition): void
+    public function testFindFromJsonThrowsInvalidPositionException(string $cssLocator, int $ordinalPosition): void
     {
         $crawler = self::$client->request('GET', '/basic.html');
         $navigator = Navigator::create($crawler);
@@ -403,10 +403,10 @@ class NavigatorTest extends AbstractBrowserTestCase
         $elementLocator = new ElementIdentifier($cssLocator, $ordinalPosition);
 
         try {
-            $navigator->find($elementLocator);
+            $navigator->findFromJson((string) json_encode($elementLocator));
             $this->fail('InvalidPositionExceptionInterface instance not thrown');
         } catch (InvalidElementPositionException $invalidElementPositionException) {
-            self::assertSame($elementLocator, $invalidElementPositionException->getElementIdentifier());
+            self::assertEquals($elementLocator, $invalidElementPositionException->getElementIdentifier());
 
             $previousException = $invalidElementPositionException->getPrevious();
             self::assertInstanceOf(InvalidPositionExceptionInterface::class, $previousException);
