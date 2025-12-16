@@ -62,7 +62,17 @@ class Navigator
      */
     public function findOneFromJson(string $json): WebDriverElement
     {
-        return $this->findOne(ElementIdentifier::fromJson($json));
+        $collection = $this->findFromJson($json);
+
+        if (1 === count($collection)) {
+            $element = $collection->get(0);
+
+            if ($element instanceof WebDriverElement) {
+                return $element;
+            }
+        }
+
+        throw new OverlyBroadLocatorException(ElementIdentifier::fromJson($json), $collection);
     }
 
     /**
@@ -75,7 +85,7 @@ class Navigator
             return count($collection) > 0;
         };
 
-        return $this->examineCollectionCount(ElementIdentifier::fromJson($json), $examiner);
+        return $this->examineCollectionCount($json, $examiner);
     }
 
     /**
@@ -88,28 +98,7 @@ class Navigator
             return 1 === count($collection);
         };
 
-        return $this->examineCollectionCount(ElementIdentifier::fromJson($json), $examiner);
-    }
-
-    /**
-     * @throws InvalidElementPositionException
-     * @throws UnknownElementException
-     * @throws OverlyBroadLocatorException
-     * @throws InvalidLocatorException
-     */
-    private function findOne(ElementIdentifierInterface $elementIdentifier): WebDriverElement
-    {
-        $collection = $this->find($elementIdentifier);
-
-        if (1 === count($collection)) {
-            $element = $collection->get(0);
-
-            if ($element instanceof WebDriverElement) {
-                return $element;
-            }
-        }
-
-        throw new OverlyBroadLocatorException($elementIdentifier, $collection);
+        return $this->examineCollectionCount($json, $examiner);
     }
 
     /**
@@ -143,15 +132,16 @@ class Navigator
     /**
      * @param callable(WebDriverElementCollectionInterface): bool $examiner
      *
+     * @throws InvalidJsonException
      * @throws InvalidLocatorException
      */
-    private function examineCollectionCount(ElementIdentifierInterface $elementIdentifier, callable $examiner): bool
+    private function examineCollectionCount(string $json, callable $examiner): bool
     {
         try {
-            $collection = $this->find($elementIdentifier);
+            $collection = $this->findFromJson($json);
 
             return $examiner($collection);
-        } catch (InvalidElementPositionException|UnknownElementException $exception) {
+        } catch (InvalidElementPositionException|UnknownElementException) {
             return false;
         }
     }
