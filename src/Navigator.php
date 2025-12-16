@@ -71,7 +71,11 @@ class Navigator
      */
     public function hasFromJson(string $json): bool
     {
-        return $this->has(ElementIdentifier::fromJson($json));
+        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
+            return count($collection) > 0;
+        };
+
+        return $this->examineCollectionCount(ElementIdentifier::fromJson($json), $examiner);
     }
 
     /**
@@ -85,18 +89,6 @@ class Navigator
         };
 
         return $this->examineCollectionCount(ElementIdentifier::fromJson($json), $examiner);
-    }
-
-    /**
-     * @throws InvalidLocatorException
-     */
-    private function has(ElementIdentifierInterface $elementIdentifier): bool
-    {
-        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
-            return count($collection) > 0;
-        };
-
-        return $this->examineCollectionCount($elementIdentifier, $examiner);
     }
 
     /**
