@@ -54,9 +54,7 @@ class Navigator
         $elements = [];
 
         foreach ($elementCrawler as $remoteWebElement) {
-            if ($remoteWebElement instanceof WebDriverElement) {
-                $elements[] = $remoteWebElement;
-            }
+            $elements[] = $remoteWebElement;
         }
 
         if (RadioButtonCollection::is($elements)) {
@@ -96,7 +94,7 @@ class Navigator
      */
     public function has(ElementIdentifierInterface $elementIdentifier): bool
     {
-        $examiner = function (WebDriverElementCollectionInterface $collection) {
+        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
             return count($collection) > 0;
         };
 
@@ -108,7 +106,7 @@ class Navigator
      */
     public function hasOne(ElementIdentifierInterface $elementIdentifier): bool
     {
-        $examiner = function (WebDriverElementCollectionInterface $collection) {
+        $examiner = function (WebDriverElementCollectionInterface $collection): bool {
             return 1 === count($collection);
         };
 
@@ -116,6 +114,8 @@ class Navigator
     }
 
     /**
+     * @param callable(WebDriverElementCollectionInterface): bool $examiner
+     *
      * @throws InvalidLocatorException
      */
     private function examineCollectionCount(ElementIdentifierInterface $elementIdentifier, callable $examiner): bool
