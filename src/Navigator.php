@@ -80,19 +80,11 @@ class Navigator
      */
     public function hasOneFromJson(string $json): bool
     {
-        return $this->hasOne(ElementIdentifier::fromJson($json));
-    }
-
-    /**
-     * @throws InvalidLocatorException
-     */
-    private function hasOne(ElementIdentifierInterface $elementIdentifier): bool
-    {
         $examiner = function (WebDriverElementCollectionInterface $collection): bool {
             return 1 === count($collection);
         };
 
-        return $this->examineCollectionCount($elementIdentifier, $examiner);
+        return $this->examineCollectionCount(ElementIdentifier::fromJson($json), $examiner);
     }
 
     /**
