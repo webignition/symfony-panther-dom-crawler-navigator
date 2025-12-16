@@ -15,7 +15,4 @@ return $config->setRules([
     'trailing_comma_in_multiline' => false,
     'php_unit_internal_class' => false,
     'php_unit_test_class_requires_covers' => false,
-    // Following configuration added to make CI builds pass
-    // @todo remove in #95
-    'nullable_type_declaration_for_default_null_value' => false,
 ])->setFinder($finder);
