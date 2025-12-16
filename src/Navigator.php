@@ -50,7 +50,27 @@ class Navigator
      */
     public function findFromJson(string $json): WebDriverElementCollectionInterface
     {
-        return $this->find(ElementIdentifier::fromJson($json));
+        $elementIdentifier = ElementIdentifier::fromJson($json);
+
+        $scopeCrawler = $this->createScopeCrawler($elementIdentifier);
+
+        $elementCrawler = $this->crawlerFactory->createElementCrawler($elementIdentifier, $scopeCrawler);
+
+        $elements = [];
+
+        foreach ($elementCrawler as $remoteWebElement) {
+            $elements[] = $remoteWebElement;
+        }
+
+        if (RadioButtonCollection::is($elements)) {
+            return new RadioButtonCollection($elements);
+        }
+
+        if (SelectOptionCollection::is($elements)) {
+            return new SelectOptionCollection($elements);
+        }
+
+        return new WebDriverElementCollection($elements);
     }
 
     /**
@@ -99,34 +119,6 @@ class Navigator
         };
 
         return $this->examineCollectionCount($json, $examiner);
-    }
-
-    /**
-     * @throws InvalidElementPositionException
-     * @throws UnknownElementException
-     * @throws InvalidLocatorException
-     */
-    private function find(ElementIdentifierInterface $elementIdentifier): WebDriverElementCollectionInterface
-    {
-        $scopeCrawler = $this->createScopeCrawler($elementIdentifier);
-
-        $elementCrawler = $this->crawlerFactory->createElementCrawler($elementIdentifier, $scopeCrawler);
-
-        $elements = [];
-
-        foreach ($elementCrawler as $remoteWebElement) {
-            $elements[] = $remoteWebElement;
-        }
-
-        if (RadioButtonCollection::is($elements)) {
-            return new RadioButtonCollection($elements);
-        }
-
-        if (SelectOptionCollection::is($elements)) {
-            return new SelectOptionCollection($elements);
-        }
-
-        return new WebDriverElementCollection($elements);
     }
 
     /**
