@@ -50,9 +50,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
 
                     /** @var WebDriverElement $element */
                     foreach ($crawler as $index => $element) {
-                        if ($element instanceof WebDriverElement) {
-                            $this->assertSame($expectedElementGetText[$index], $element->getText());
-                        }
+                        $this->assertSame($expectedElementGetText[$index], $element->getText());
                     }
                 },
             ],
@@ -159,9 +157,7 @@ class CrawlerFactoryTest extends AbstractBrowserTestCase
             $previousException = $invalidElementPositionException->getPrevious();
             $this->assertInstanceOf(InvalidPositionExceptionInterface::class, $previousException);
 
-            if ($previousException instanceof InvalidPositionExceptionInterface) {
-                $this->assertSame($previousException->getOrdinalPosition(), $elementIdentifier->getOrdinalPosition());
-            }
+            $this->assertSame($previousException->getOrdinalPosition(), $elementIdentifier->getOrdinalPosition());
         }
     }
 

@@ -18,14 +18,6 @@ use webignition\WebDriverElementCollection\WebDriverElementCollection;
 
 class NavigatorTest extends AbstractBrowserTestCase
 {
-    public function testCreate(): void
-    {
-        $crawler = self::$client->request('GET', '/index.html');
-        $navigator = Navigator::create($crawler);
-
-        $this->assertInstanceOf(Navigator::class, $navigator);
-    }
-
     /**
      * @dataProvider findSuccessDataProvider
      */
@@ -53,9 +45,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $element = $collection->get(0);
                     $this->assertInstanceOf(WebDriverElement::class, $element);
 
-                    if ($element instanceof WebDriverElement) {
-                        $this->assertSame('Hello', $element->getText());
-                    }
+                    $this->assertSame('Hello', $element->getText());
                 },
             ],
             'first h1 with xpath expression' => [
@@ -66,9 +56,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $element = $collection->get(0);
                     $this->assertInstanceOf(WebDriverElement::class, $element);
 
-                    if ($element instanceof WebDriverElement) {
-                        $this->assertSame('Hello', $element->getText());
-                    }
+                    $this->assertSame('Hello', $element->getText());
                 },
             ],
             'second h1 with css selector' => [
@@ -79,9 +67,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $element = $collection->get(0);
                     $this->assertInstanceOf(WebDriverElement::class, $element);
 
-                    if ($element instanceof WebDriverElement) {
-                        $this->assertSame('Main', $element->getText());
-                    }
+                    $this->assertSame('Main', $element->getText());
                 },
             ],
             'css-selector input scoped to css-selector second form' => [
@@ -95,9 +81,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $element = $collection->get(0);
                     $this->assertInstanceOf(WebDriverElement::class, $element);
 
-                    if ($element instanceof WebDriverElement) {
-                        $this->assertSame('input-2', $element->getAttribute('name'));
-                    }
+                    $this->assertSame('input-2', $element->getAttribute('name'));
                 },
             ],
             'deep nested descendant' => [
@@ -114,9 +98,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $element = $collection->get(0);
                     $this->assertInstanceOf(WebDriverElement::class, $element);
 
-                    if ($element instanceof WebDriverElement) {
-                        $this->assertSame('two', $element->getText());
-                    }
+                    $this->assertSame('two', $element->getText());
                 },
             ],
             'css-selector input scoped to xpath-expression second form' => [
@@ -130,9 +112,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $element = $collection->get(0);
                     $this->assertInstanceOf(WebDriverElement::class, $element);
 
-                    if ($element instanceof WebDriverElement) {
-                        $this->assertSame('input-2', $element->getAttribute('name'));
-                    }
+                    $this->assertSame('input-2', $element->getAttribute('name'));
                 },
             ],
             'radio group' => [
@@ -141,6 +121,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $this->assertCount(3, $collection);
 
                     foreach ($collection as $elementIndex => $element) {
+                        \assert(is_int($elementIndex));
                         $this->assertSame((string) ($elementIndex + 1), $element->getAttribute('value'));
                     }
                 },
@@ -151,6 +132,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                     $this->assertCount(3, $collection);
 
                     foreach ($collection as $elementIndex => $element) {
+                        \assert(is_int($elementIndex));
                         $this->assertSame((string) ($elementIndex + 1), $element->getAttribute('value'));
                     }
                 },
@@ -222,11 +204,7 @@ class NavigatorTest extends AbstractBrowserTestCase
                             )
                     ),
                 'assertions' => function (WebDriverElement $element) {
-                    $this->assertInstanceOf(WebDriverElement::class, $element);
-
-                    if ($element instanceof WebDriverElement) {
-                        $this->assertSame('two', $element->getText());
-                    }
+                    $this->assertSame('two', $element->getText());
                 },
             ],
         ];
@@ -414,9 +392,7 @@ class NavigatorTest extends AbstractBrowserTestCase
             $previousException = $invalidElementPositionException->getPrevious();
             $this->assertInstanceOf(InvalidPositionExceptionInterface::class, $previousException);
 
-            if ($previousException instanceof InvalidPositionExceptionInterface) {
-                $this->assertSame($previousException->getOrdinalPosition(), $elementLocator->getOrdinalPosition());
-            }
+            $this->assertSame($previousException->getOrdinalPosition(), $elementLocator->getOrdinalPosition());
         }
     }
 
