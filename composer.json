@@ -22,6 +22,20 @@
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "@patch-panther-compatible-with-browserkit"
+        ],
+        "post-update-cmd": [
+            "@patch-panther-compatible-with-browserkit"
+        ],
+        "patch-panther-compatible-with-browserkit": [
+            "echo 'Patching vendor/symfony/panther/src/Client.php'",
+            "sed -i 's/protected function doRequest($request): object/protected function doRequest($request)/g' vendor/symfony/panther/src/Client.php",
+            "sed -i 's/protected function doRequest($request)/protected function doRequest($request): object/g' vendor/symfony/panther/src/Client.php",
+            "echo 'Patching vendor/symfony/panther/src/DomCrawler/Crawler.php'",
+            "sed -i 's/public function closest(string $selector): ?static/public function closest(string $selector): ?self/g' vendor/symfony/panther/src/DomCrawler/Crawler.php",
+            "sed -i 's/public function closest(string $selector): ?self/public function closest(string $selector): ?static/g' vendor/symfony/panther/src/DomCrawler/Crawler.php"
+        ],
         "cs-fixer-dry-run": "docker run --rm $(if [ ! -z \"${NO_TTY}\" ]; then echo \"\"; else echo \"-t\"; fi) -w=/app -v ${PWD}:/app oskarstark/php-cs-fixer-ga:latest --allow-risky=yes --dry-run --verbose --show-progress none",
         "cs-fixer-fix": "docker run --rm $(if [ ! -z \"${NO_TTY}\" ]; then echo \"\"; else echo \"-t\"; fi) -w=/app -v ${PWD}:/app oskarstark/php-cs-fixer-ga:latest --allow-risky=yes --diff",
         "cs-phpcs": "./vendor/bin/phpcs",
