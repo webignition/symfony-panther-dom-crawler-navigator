@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyDomCrawlerNavigator\Tests\Unit;
 
+use PHPUnit\Framework\TestCase;
 use webignition\SymfonyDomCrawlerNavigator\CollectionPositionFinder;
 use webignition\SymfonyDomCrawlerNavigator\Exception\PositionCannotBeZeroException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\PositionOutOfBoundsException;
 
-class CollectionPositionFinderTest extends \PHPUnit\Framework\TestCase
+class CollectionPositionFinderTest extends TestCase
 {
     private CollectionPositionFinder $collectionPositionFinder;
 

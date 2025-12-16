@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace webignition\SymfonyDomCrawlerNavigator\Tests\Unit;
 
 use Facebook\WebDriver\WebDriver;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Panther\DomCrawler\Crawler;
 use webignition\SymfonyDomCrawlerNavigator\CrawlerFactory;
 use webignition\SymfonyDomCrawlerNavigator\Navigator;
 
-class NavigatorTest extends \PHPUnit\Framework\TestCase
+class NavigatorTest extends TestCase
 {
     public function testSetCrawler(): void
     {

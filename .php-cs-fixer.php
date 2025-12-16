@@ -19,5 +19,4 @@ return $config->setRules([
     // @todo remove in #95
     'nullable_type_declaration_for_default_null_value' => false,
     'ordered_types' => false,
-    'fully_qualified_strict_types' => false,
 ])->setFinder($finder);
