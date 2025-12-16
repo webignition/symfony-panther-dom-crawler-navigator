@@ -6,7 +6,9 @@ namespace webignition\SymfonyDomCrawlerNavigator;
 
 use Facebook\WebDriver\WebDriverElement;
 use Symfony\Component\Panther\DomCrawler\Crawler;
+use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
+use webignition\DomElementIdentifier\InvalidJsonException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidElementPositionException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\OverlyBroadLocatorException;
@@ -70,6 +72,17 @@ class Navigator
 
     /**
      * @throws InvalidElementPositionException
+     * @throws InvalidLocatorException
+     * @throws UnknownElementException
+     * @throws InvalidJsonException
+     */
+    public function findFromJson(string $json): WebDriverElementCollectionInterface
+    {
+        return $this->find(ElementIdentifier::fromJson($json));
+    }
+
+    /**
+     * @throws InvalidElementPositionException
      * @throws UnknownElementException
      * @throws OverlyBroadLocatorException
      * @throws InvalidLocatorException
@@ -90,6 +103,18 @@ class Navigator
     }
 
     /**
+     * @throws InvalidElementPositionException
+     * @throws InvalidJsonException
+     * @throws InvalidLocatorException
+     * @throws OverlyBroadLocatorException
+     * @throws UnknownElementException
+     */
+    public function findOneFromJson(string $json): WebDriverElement
+    {
+        return $this->findOne(ElementIdentifier::fromJson($json));
+    }
+
+    /**
      * @throws InvalidLocatorException
      */
     public function has(ElementIdentifierInterface $elementIdentifier): bool
@@ -102,6 +127,15 @@ class Navigator
     }
 
     /**
+     * @throws InvalidJsonException
+     * @throws InvalidLocatorException
+     */
+    public function hasFromJson(string $json): bool
+    {
+        return $this->has(ElementIdentifier::fromJson($json));
+    }
+
+    /**
      * @throws InvalidLocatorException
      */
     public function hasOne(ElementIdentifierInterface $elementIdentifier): bool
@@ -111,6 +145,15 @@ class Navigator
         };
 
         return $this->examineCollectionCount($elementIdentifier, $examiner);
+    }
+
+    /**
+     * @throws InvalidJsonException
+     * @throws InvalidLocatorException
+     */
+    public function hasOneFromJson(string $json): bool
+    {
+        return $this->hasOne(ElementIdentifier::fromJson($json));
     }
 
     /**

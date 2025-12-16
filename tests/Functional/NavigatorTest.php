@@ -30,6 +30,17 @@ class NavigatorTest extends AbstractBrowserTestCase
         $assertions($element);
     }
 
+    #[DataProvider('findSuccessDataProvider')]
+    public function testFindFromJsonSuccess(ElementIdentifierInterface $elementIdentifier, callable $assertions): void
+    {
+        $crawler = self::$client->request('GET', '/basic.html');
+        $navigator = Navigator::create($crawler);
+
+        $element = $navigator->findFromJson((string) json_encode($elementIdentifier));
+
+        $assertions($element);
+    }
+
     /**
      * @return array<mixed>
      */
@@ -150,6 +161,19 @@ class NavigatorTest extends AbstractBrowserTestCase
         $assertions($element);
     }
 
+    #[DataProvider('findOneSuccessDataProvider')]
+    public function testFindOneFromJsonSuccess(
+        ElementIdentifierInterface $elementIdentifier,
+        callable $assertions
+    ): void {
+        $crawler = self::$client->request('GET', '/basic.html');
+        $navigator = Navigator::create($crawler);
+
+        $element = $navigator->findOneFromJson((string) json_encode($elementIdentifier));
+
+        $assertions($element);
+    }
+
     /**
      * @return array<mixed>
      */
@@ -216,6 +240,15 @@ class NavigatorTest extends AbstractBrowserTestCase
         self::assertSame($expectedHas, $navigator->has($elementIdentifier));
     }
 
+    #[DataProvider('hasSuccessDataProvider')]
+    public function testHasFromJsonSuccess(ElementIdentifierInterface $elementIdentifier, bool $expectedHas): void
+    {
+        $crawler = self::$client->request('GET', '/basic.html');
+        $navigator = Navigator::create($crawler);
+
+        self::assertSame($expectedHas, $navigator->hasFromJson((string) json_encode($elementIdentifier)));
+    }
+
     /**
      * @return array<mixed>
      */
@@ -271,6 +304,15 @@ class NavigatorTest extends AbstractBrowserTestCase
         $navigator = Navigator::create($crawler);
 
         self::assertSame($expectedHas, $navigator->hasOne($elementIdentifier));
+    }
+
+    #[DataProvider('hasOneSuccessDataProvider')]
+    public function testHasOneFromJsonSuccess(ElementIdentifierInterface $elementIdentifier, bool $expectedHas): void
+    {
+        $crawler = self::$client->request('GET', '/basic.html');
+        $navigator = Navigator::create($crawler);
+
+        self::assertSame($expectedHas, $navigator->hasOneFromJson((string) json_encode($elementIdentifier)));
     }
 
     /**
