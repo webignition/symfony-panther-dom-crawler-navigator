@@ -38,4 +38,14 @@ class InvalidLocatorException extends AbstractElementException implements Invali
             'type' => $this->getElementIdentifier()->getType()?->value,
         ];
     }
+
+    public function getLocator(): string
+    {
+        return $this->getElementIdentifier()->getLocator();
+    }
+
+    public function getTypeString(): ?string
+    {
+        return $this->getElementIdentifier()->getType()?->value;
+    }
 }

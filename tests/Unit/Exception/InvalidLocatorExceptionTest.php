@@ -108,4 +108,164 @@ class InvalidLocatorExceptionTest extends TestCase
             ],
         ];
     }
+
+    #[DataProvider('getLocatorDataProvider')]
+    public function testGetLocator(InvalidLocatorException $exception, ?string $expected): void
+    {
+        self::assertSame($expected, $exception->getLocator());
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public static function getLocatorDataProvider(): array
+    {
+        return [
+            'css' => [
+                'exception' => new InvalidLocatorException(
+                    (function () {
+                        $identifier = \Mockery::mock(ElementIdentifierInterface::class);
+                        $identifier
+                            ->shouldReceive('isCssSelector')
+                            ->andReturnTrue()
+                        ;
+                        $identifier
+                            ->shouldReceive('getLocator')
+                            ->andReturn('.css-locator')
+                        ;
+
+                        return $identifier;
+                    })(),
+                    new InvalidSelectorException(''),
+                ),
+                'expected' => '.css-locator',
+            ],
+            'xpath' => [
+                'exception' => new InvalidLocatorException(
+                    (function () {
+                        $identifier = \Mockery::mock(ElementIdentifierInterface::class);
+                        $identifier
+                            ->shouldReceive('isCssSelector')
+                            ->andReturnFalse()
+                        ;
+                        $identifier
+                            ->shouldReceive('getLocator')
+                            ->andReturn('//xpath-locator')
+                        ;
+
+                        return $identifier;
+                    })(),
+                    new InvalidSelectorException(''),
+                ),
+                'expected' => '//xpath-locator',
+            ],
+            'null' => [
+                'exception' => new InvalidLocatorException(
+                    (function () {
+                        $identifier = \Mockery::mock(ElementIdentifierInterface::class);
+                        $identifier
+                            ->shouldReceive('isCssSelector')
+                            ->andReturnFalse()
+                        ;
+                        $identifier
+                            ->shouldReceive('getLocator')
+                            ->andReturn('')
+                        ;
+                        $identifier
+                            ->shouldReceive('getType')
+                            ->andReturnNull()
+                        ;
+
+                        return $identifier;
+                    })(),
+                    new InvalidSelectorException(''),
+                ),
+                'expected' => '',
+            ],
+        ];
+    }
+
+    #[DataProvider('getTypeStringDataProvider')]
+    public function testGetTypeString(InvalidLocatorException $exception, ?string $expected): void
+    {
+        self::assertSame($expected, $exception->getTypeString());
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public static function getTypeStringDataProvider(): array
+    {
+        return [
+            'css' => [
+                'exception' => new InvalidLocatorException(
+                    (function () {
+                        $identifier = \Mockery::mock(ElementIdentifierInterface::class);
+                        $identifier
+                            ->shouldReceive('isCssSelector')
+                            ->andReturnTrue()
+                        ;
+                        $identifier
+                            ->shouldReceive('getLocator')
+                            ->andReturn('.css-locator')
+                        ;
+                        $identifier
+                            ->shouldReceive('getType')
+                            ->andReturn(Type::CSS)
+                        ;
+
+                        return $identifier;
+                    })(),
+                    new InvalidSelectorException(''),
+                ),
+                'expected' => 'css',
+            ],
+            'xpath' => [
+                'exception' => new InvalidLocatorException(
+                    (function () {
+                        $identifier = \Mockery::mock(ElementIdentifierInterface::class);
+                        $identifier
+                            ->shouldReceive('isCssSelector')
+                            ->andReturnFalse()
+                        ;
+                        $identifier
+                            ->shouldReceive('getLocator')
+                            ->andReturn('//xpath-locator')
+                        ;
+                        $identifier
+                            ->shouldReceive('getType')
+                            ->andReturn(Type::XPATH)
+                        ;
+
+                        return $identifier;
+                    })(),
+                    new InvalidSelectorException(''),
+                ),
+                'expected' => 'xpath',
+            ],
+            'null' => [
+                'exception' => new InvalidLocatorException(
+                    (function () {
+                        $identifier = \Mockery::mock(ElementIdentifierInterface::class);
+                        $identifier
+                            ->shouldReceive('isCssSelector')
+                            ->andReturnFalse()
+                        ;
+                        $identifier
+                            ->shouldReceive('getLocator')
+                            ->andReturn('')
+                        ;
+                        $identifier
+                            ->shouldReceive('getType')
+                            ->andReturnNull()
+                        ;
+
+                        return $identifier;
+                    })(),
+                    new InvalidSelectorException(''),
+                ),
+                'expected' => null,
+            ],
+        ];
+    }
 }
