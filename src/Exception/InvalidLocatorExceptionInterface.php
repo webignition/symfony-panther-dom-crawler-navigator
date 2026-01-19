@@ -15,4 +15,8 @@ interface InvalidLocatorExceptionInterface
      * @return array{'locator': string, 'type': ?value-of<Type>}
      */
     public function getContext(): array;
+
+    public function getLocator(): string;
+
+    public function getTypeString(): ?string;
 }
