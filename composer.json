@@ -60,8 +60,7 @@
         "php": "^8.4",
         "php-webdriver/webdriver": "^1.12",
         "symfony/panther": "^1.0|^2.0",
-        "webignition/php-dom-element-identifier": ">=0.16,<1",
-        "webignition/php-dom-element-locator": ">=0.6,<1",
+        "webignition/php-dom-element-identifier": "^2.0",
         "webignition/web-driver-element-collection": ">=0.10,<1"
     },
     "require-dev": {

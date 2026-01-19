@@ -7,7 +7,7 @@ namespace webignition\SymfonyDomCrawlerNavigator\Exception;
 use Facebook\WebDriver\Exception\InvalidSelectorException;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
-class InvalidLocatorException extends AbstractElementException
+class InvalidLocatorException extends AbstractElementException implements InvalidLocatorExceptionInterface
 {
     private InvalidSelectorException $invalidSelectorException;
 
@@ -29,5 +29,13 @@ class InvalidLocatorException extends AbstractElementException
     public function getInvalidSelectorException(): InvalidSelectorException
     {
         return $this->invalidSelectorException;
+    }
+
+    public function getContext(): array
+    {
+        return [
+            'locator' => $this->getElementIdentifier()->getLocator(),
+            'type' => $this->getElementIdentifier()->getType()?->value,
+        ];
     }
 }
