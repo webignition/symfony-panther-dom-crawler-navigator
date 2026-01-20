@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyDomCrawlerNavigator\Exception;
 
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
 use webignition\WebDriverElementCollection\WebDriverElementCollectionInterface;
 
 class OverlyBroadLocatorException extends AbstractElementException

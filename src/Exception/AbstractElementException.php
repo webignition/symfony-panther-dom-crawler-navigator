@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\SymfonyDomCrawlerNavigator\Exception;
 
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
 
 abstract class AbstractElementException extends \Exception
 {

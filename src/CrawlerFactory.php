@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace webignition\SymfonyDomCrawlerNavigator;
 
 use Facebook\WebDriver\Exception\InvalidSelectorException;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
 use Symfony\Component\Panther\DomCrawler\Crawler;
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidElementPositionException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidPositionExceptionInterface;

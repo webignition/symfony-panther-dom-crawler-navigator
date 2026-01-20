@@ -6,8 +6,8 @@ namespace webignition\SymfonyDomCrawlerNavigator\Tests\Functional;
 
 use Facebook\WebDriver\WebDriverElement;
 use PHPUnit\Framework\Attributes\DataProvider;
-use webignition\DomElementIdentifier\ElementIdentifier;
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
+use SmartAssert\DomIdentifier\ElementIdentifier;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidElementPositionException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidPositionExceptionInterface;
 use webignition\SymfonyDomCrawlerNavigator\Exception\OverlyBroadLocatorException;
