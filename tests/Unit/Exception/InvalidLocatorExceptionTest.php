@@ -7,8 +7,8 @@ namespace webignition\SymfonyDomCrawlerNavigator\Tests\Unit\Exception;
 use Facebook\WebDriver\Exception\InvalidSelectorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
-use webignition\DomElementIdentifier\Enum\Type;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
+use SmartAssert\DomIdentifier\Enum\Type;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class InvalidLocatorExceptionTest extends TestCase

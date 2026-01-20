@@ -6,9 +6,9 @@ namespace webignition\SymfonyDomCrawlerNavigator\Tests\Functional;
 
 use Facebook\WebDriver\WebDriverElement;
 use PHPUnit\Framework\Attributes\DataProvider;
+use SmartAssert\DomIdentifier\ElementIdentifier;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
 use Symfony\Component\Panther\DomCrawler\Crawler;
-use webignition\DomElementIdentifier\ElementIdentifier;
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
 use webignition\SymfonyDomCrawlerNavigator\CrawlerFactory;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidElementPositionException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;

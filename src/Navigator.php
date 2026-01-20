@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace webignition\SymfonyDomCrawlerNavigator;
 
 use Facebook\WebDriver\WebDriverElement;
+use SmartAssert\DomIdentifier\ElementIdentifier;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
+use SmartAssert\DomIdentifier\InvalidJsonException;
 use Symfony\Component\Panther\DomCrawler\Crawler;
-use webignition\DomElementIdentifier\ElementIdentifier;
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
-use webignition\DomElementIdentifier\InvalidJsonException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidElementPositionException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 use webignition\SymfonyDomCrawlerNavigator\Exception\OverlyBroadLocatorException;

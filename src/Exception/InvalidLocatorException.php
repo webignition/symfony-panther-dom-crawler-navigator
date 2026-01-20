@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\SymfonyDomCrawlerNavigator\Exception;
 
 use Facebook\WebDriver\Exception\InvalidSelectorException;
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
 
 class InvalidLocatorException extends AbstractElementException implements InvalidLocatorExceptionInterface
 {
